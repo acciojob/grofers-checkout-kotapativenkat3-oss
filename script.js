@@ -5,31 +5,38 @@ document.body.appendChild(getSumBtn);
 
 const getSum = () => {
 
-    // Select all prices from the table
-    const prices = document.querySelectorAll(".prices");
+    const prices = document.querySelectorAll(".price");
 
     let total = 0;
 
-    // Calculate total price
     prices.forEach((price) => {
         total += Number(price.textContent);
     });
 
-    // Create a new table row
-    const newRow = document.createElement("tr");
+    // Remove previous total row if it exists
+    const oldRow = document.querySelector("#total-row");
 
-    // Create a single cell
+    if (oldRow) {
+        oldRow.remove();
+    }
+
+    // Create new row
+    const newRow = document.createElement("tr");
+    newRow.id = "total-row";
+
     const newCell = document.createElement("td");
 
-    // Display total price
     newCell.textContent = "Total Price: Rs " + total;
 
-    // Append cell to row
+    newCell.colSpan = 2;
+
     newRow.appendChild(newCell);
 
-    // Append row to table
     document.querySelector("table").appendChild(newRow);
-
 };
 
+// Calculate automatically when page loads
+getSum();
+
+// Calculate again when button is clicked
 getSumBtn.addEventListener("click", getSum);
